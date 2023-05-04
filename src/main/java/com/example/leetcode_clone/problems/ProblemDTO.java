@@ -34,6 +34,7 @@ class CreateProblemResponseDto {
 class ProblemDetailDto {
     private String slug;
     private String title;
+    private String description;
 }
 
 @Getter
