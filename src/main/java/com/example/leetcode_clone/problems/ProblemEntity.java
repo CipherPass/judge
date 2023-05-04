@@ -45,4 +45,8 @@ public class ProblemEntity extends Auditable {
     @Basic(fetch = FetchType.LAZY)
     @OneToMany(mappedBy = "problem")
     private List<SubmittionEntity> submittions;
+
+    public String getResourceURL(){
+        return "/problems/"+this.slug+"/";
+    }
 }
