@@ -3,6 +3,7 @@ package com.example.leetcode_clone.users;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -18,6 +19,9 @@ import lombok.Setter;
 @Setter
 @Entity(name = "profiles")
 public class ProfileEntity extends Auditable{
+    @Column(name = "slug", nullable = false, unique = true, length = 50)
+    private String slug;
+    
     @OneToOne
     private UserEntity user;
 
