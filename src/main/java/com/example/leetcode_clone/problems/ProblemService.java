@@ -29,17 +29,26 @@ public class ProblemService {
         return problemDtos;
     }
 
-    public ProblemDetailDto getProblem(Long id){
+    public ProblemEntity getProblemEntityBySlug(String slug){
+        ProblemEntity problem = this.problemRepository.findBySlug(slug).orElseThrow(() -> {
+            throw new ProblemNotFoundException(slug);
+        });
+        return problem;
+    }
+    public ProblemEntity getProblemEntityById(Long id){
         ProblemEntity problem = this.problemRepository.findById(id).orElseThrow(() -> {
             throw new ProblemNotFoundException(id);
         });
+        return problem;
+    }
+
+    public ProblemDetailDto getProblem(Long id){
+        ProblemEntity problem = getProblemEntityById(id);
         ProblemDetailDto problemDto = this.modelMapper.map(problem, ProblemDetailDto.class);
         return problemDto;
     }
     public ProblemDetailDto getProblem(String slug){
-        ProblemEntity problem = this.problemRepository.findBySlug(slug).orElseThrow(() -> {
-            throw new ProblemNotFoundException(slug);
-        });
+        ProblemEntity problem = getProblemEntityBySlug(slug);
         ProblemDetailDto problemDto = this.modelMapper.map(problem, ProblemDetailDto.class);
         return problemDto;
     }
@@ -51,15 +60,11 @@ public class ProblemService {
     }
 
     public CreateProblemResponseDto updateProblem(String slug, CreateProblemDTO createProblemDTO) {
-        var problem = this.problemRepository.findBySlug(slug).orElseThrow(() -> {
-            throw new ProblemNotFoundException(slug);
-        });
+        var problem = getProblemEntityBySlug(slug);
         return this.modelMapper.map(updateProblem(createProblemDTO, problem), CreateProblemResponseDto.class);
     }
     public CreateProblemResponseDto updateProblem(Long id, CreateProblemDTO createProblemDTO) {
-        var problem = this.problemRepository.findById(id).orElseThrow(() -> {
-            throw new ProblemNotFoundException(id);
-        });
+        var problem = getProblemEntityById(id);
         return this.modelMapper.map(updateProblem(createProblemDTO, problem), CreateProblemResponseDto.class);
     }
     private ProblemEntity updateProblem(CreateProblemDTO source, ProblemEntity destination){
@@ -83,9 +88,7 @@ public class ProblemService {
 
     public void deleteProblem(String slug) {
         // TODO: should have permission
-        var problem = this.problemRepository.findBySlug(slug).orElseThrow(() -> {
-            throw new ProblemNotFoundException(slug);
-        });
+        var problem = getProblemEntityBySlug(slug);
         this.problemRepository.delete(problem);
     }
 }

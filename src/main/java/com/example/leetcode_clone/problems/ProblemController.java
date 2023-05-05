@@ -56,7 +56,10 @@ public class ProblemController {
 
     @DeleteMapping("/{slug}")
     ResponseEntity<String> deleteProblem(@PathVariable String slug){
-        this.problemService.deleteProblem(slug);
+        try {
+            this.problemService.deleteProblem(slug);
+        } catch (ProblemService.ProblemNotFoundException e) {
+        }
         return ResponseEntity.accepted().body("Problem deleted successfully");
     }
 
