@@ -37,19 +37,19 @@ public class ProblemController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<CreateProblemResponseDto> createArticle(@RequestBody CreateProblemDTO createProblemDTO){
+    public ResponseEntity<CreateProblemResponseDto> createProblem(@RequestBody CreateProblemDTO createProblemDTO){
         var problem = this.problemService.createProblem(createProblemDTO);
         return ResponseEntity.created(URI.create(problem.getResourceURL())).body(problem);
     }
 
     @GetMapping("/{slug}")
-    public ResponseEntity<ProblemDetailDto> getArticleBySlug(@PathVariable String slug){
+    public ResponseEntity<ProblemDetailDto> getProblemBySlug(@PathVariable String slug){
         var problem = this.problemService.getProblem(slug);
         return ResponseEntity.ok(problem);
     }
 
     @PostMapping("/{slug}")
-    public ResponseEntity<CreateProblemResponseDto> updateArticleBySlug(@PathVariable String slug, @RequestBody CreateProblemDTO createProblemDTO){
+    public ResponseEntity<CreateProblemResponseDto> updateProblemBySlug(@PathVariable String slug, @RequestBody CreateProblemDTO createProblemDTO){
         var problem = this.problemService.updateProblem(slug, createProblemDTO);
         return ResponseEntity.accepted().body(problem);
     }
