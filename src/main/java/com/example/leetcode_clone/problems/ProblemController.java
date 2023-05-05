@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/problems")
+@RequestMapping("/api/problems")
 public class ProblemController {
     private ProblemService problemService;
 

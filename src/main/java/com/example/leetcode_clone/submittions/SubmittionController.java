@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/problems/{problem_slug}/submittions")
+@RequestMapping("/api")
 public class SubmittionController {
     private SubmittionService submittionService;
 
@@ -18,7 +18,7 @@ public class SubmittionController {
         this.submittionService = submittionService;
     }
 
-    @GetMapping("")
+    @GetMapping("/problems/{problem_slug}/submittions")
     ResponseEntity<List<SubmittionListDto>> getProblemList(
         @PathVariable String problem_slug,
         @RequestParam(value="page", defaultValue = "0") String pageString,
@@ -31,4 +31,9 @@ public class SubmittionController {
         return ResponseEntity.ok(submittionListDtos);
     }
 
+    @GetMapping("/submittions/{id}")
+    public ResponseEntity<SubmittionDetailDto> getSubmittionById(@PathVariable Long id){
+        var submittion = this.submittionService.getSubmittionById(id);
+        return ResponseEntity.ok(submittion);
+    }
 }

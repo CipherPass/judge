@@ -36,4 +36,20 @@ public class SubmittionService {
         return submittionDtos;
     }
 
+    public SubmittionEntity getSubmittionEntityById(Long id){
+        return this.submittionRepository.findById(id).orElseThrow(() -> {
+            throw new SubmittionNotFoundException(id);
+        });
+    }
+
+    public SubmittionDetailDto getSubmittionById(Long id) {
+        var submittion = getSubmittionEntityById(id);
+        return this.modelMapper.map(submittion, SubmittionDetailDto.class);
+    }
+
+    public static class SubmittionNotFoundException extends IllegalArgumentException {
+        public SubmittionNotFoundException(Long id) {
+            super("Submittion with id: "+ id + " not found");
+        }
+    }
 }

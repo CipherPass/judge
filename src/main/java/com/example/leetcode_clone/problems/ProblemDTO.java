@@ -42,4 +42,5 @@ class ProblemDetailDto {
 class ProblemListDto {
     private String slug;
     private String title;
+    private String resourceURL;
 }
