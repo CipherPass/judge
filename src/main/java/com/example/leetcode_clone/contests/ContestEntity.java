@@ -1,5 +1,6 @@
 package com.example.leetcode_clone.contests;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -26,4 +27,10 @@ public class ContestEntity extends Auditable {
 
     @OneToMany(mappedBy = "contest")
     private List<ContestProblemEntity> contestProblems;
+
+    @Column(nullable = false)
+    private Date contestStartTime;
+    
+    @Column(nullable = true)
+    private Date contestEndTime;
 }
