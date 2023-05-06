@@ -1,22 +1,16 @@
-package com.example.leetcode_clone.submittions;
+package com.example.leetcode_clone.submittions.dto;
 
 import java.util.Date;
+
+import com.example.leetcode_clone.submittions.SubmittionStatus;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
-class SubmittionListDto {
-    private String problemSlug;
-    private String profileSlug;
-    private SubmittionStatus status;
-    private Date createdAt;
-}
 
 @Getter
 @Setter
-class SubmittionDetailDto {
+public class SubmittionDetailDTO {
     private Problem problem;
     private String profileSlug;
     private String code;

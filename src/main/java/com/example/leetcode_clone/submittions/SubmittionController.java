@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.leetcode_clone.submittions.dto.SubmittionDetailDTO;
+import com.example.leetcode_clone.submittions.dto.SubmittionListDTO;
+
 @RestController
 @RequestMapping("/api")
 public class SubmittionController {
@@ -19,7 +22,7 @@ public class SubmittionController {
     }
 
     @GetMapping("/problems/{problem_slug}/submittions")
-    ResponseEntity<List<SubmittionListDto>> getProblemList(
+    ResponseEntity<List<SubmittionListDTO>> getProblemList(
         @PathVariable String problem_slug,
         @RequestParam(value="page", defaultValue = "0") String pageString,
         @RequestParam(value="size", defaultValue = "2") String sizeString
@@ -27,12 +30,12 @@ public class SubmittionController {
         Integer page = Integer.parseInt(pageString);
         Integer size = Integer.parseInt(sizeString);
 
-        List<SubmittionListDto> submittionListDtos = this.submittionService.getSubmittionListForProblemSlug(page, size, problem_slug);
+        List<SubmittionListDTO> submittionListDtos = this.submittionService.getSubmittionListForProblemSlug(page, size, problem_slug);
         return ResponseEntity.ok(submittionListDtos);
     }
 
     @GetMapping("/submittions/{id}")
-    public ResponseEntity<SubmittionDetailDto> getSubmittionById(@PathVariable Long id){
+    public ResponseEntity<SubmittionDetailDTO> getSubmittionById(@PathVariable Long id){
         var submittion = this.submittionService.getSubmittionById(id);
         return ResponseEntity.ok(submittion);
     }

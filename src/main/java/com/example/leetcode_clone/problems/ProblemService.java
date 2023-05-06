@@ -8,6 +8,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.leetcode_clone.problems.dto.CreateProblemDTO;
+import com.example.leetcode_clone.problems.dto.ProblemDetailDTO;
+import com.example.leetcode_clone.problems.dto.ProblemListDTO;
+
 @Service
 public class ProblemService {
 
@@ -19,11 +23,11 @@ public class ProblemService {
         this.problemRepository = problemRepository;
     }
 
-    public List<ProblemListDto> getProblemList(Integer page, Integer size) {
+    public List<ProblemListDTO> getProblemList(Integer page, Integer size) {
         Page<ProblemEntity> problems = this.problemRepository.findAll(PageRequest.of(page, size, Sort.by("id").ascending()));
-        List<ProblemListDto> problemDtos = problems
+        List<ProblemListDTO> problemDtos = problems
             .stream()
-            .map(problem -> this.modelMapper.map(problem, ProblemListDto.class))
+            .map(problem -> this.modelMapper.map(problem, ProblemListDTO.class))
             .toList();
         
         return problemDtos;
@@ -42,30 +46,30 @@ public class ProblemService {
         return problem;
     }
 
-    public ProblemDetailDto getProblem(Long id){
+    public ProblemDetailDTO getProblem(Long id){
         ProblemEntity problem = getProblemEntityById(id);
-        ProblemDetailDto problemDto = this.modelMapper.map(problem, ProblemDetailDto.class);
+        ProblemDetailDTO problemDto = this.modelMapper.map(problem, ProblemDetailDTO.class);
         return problemDto;
     }
-    public ProblemDetailDto getProblem(String slug){
+    public ProblemDetailDTO getProblem(String slug){
         ProblemEntity problem = getProblemEntityBySlug(slug);
-        ProblemDetailDto problemDto = this.modelMapper.map(problem, ProblemDetailDto.class);
+        ProblemDetailDTO problemDto = this.modelMapper.map(problem, ProblemDetailDTO.class);
         return problemDto;
     }
 
-    public CreateProblemResponseDto createProblem(CreateProblemDTO createProblemDTO) {
+    public ProblemDetailDTO createProblem(CreateProblemDTO createProblemDTO) {
         var problem = this.modelMapper.map(createProblemDTO, ProblemEntity.class);
         problem = this.problemRepository.save(problem);
-        return this.modelMapper.map(problem, CreateProblemResponseDto.class);
+        return this.modelMapper.map(problem, ProblemDetailDTO.class);
     }
 
-    public CreateProblemResponseDto updateProblem(String slug, CreateProblemDTO createProblemDTO) {
+    public ProblemDetailDTO updateProblem(String slug, CreateProblemDTO createProblemDTO) {
         var problem = getProblemEntityBySlug(slug);
-        return this.modelMapper.map(updateProblem(createProblemDTO, problem), CreateProblemResponseDto.class);
+        return this.modelMapper.map(updateProblem(createProblemDTO, problem), ProblemDetailDTO.class);
     }
-    public CreateProblemResponseDto updateProblem(Long id, CreateProblemDTO createProblemDTO) {
+    public ProblemDetailDTO updateProblem(Long id, CreateProblemDTO createProblemDTO) {
         var problem = getProblemEntityById(id);
-        return this.modelMapper.map(updateProblem(createProblemDTO, problem), CreateProblemResponseDto.class);
+        return this.modelMapper.map(updateProblem(createProblemDTO, problem), ProblemDetailDTO.class);
     }
     private ProblemEntity updateProblem(CreateProblemDTO source, ProblemEntity destination){
         if(source.getSlug() != null)destination.setSlug(source.getSlug());

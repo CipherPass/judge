@@ -8,6 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.leetcode_clone.submittions.dto.SubmittionDetailDTO;
+import com.example.leetcode_clone.submittions.dto.SubmittionListDTO;
 import com.example.leetcode_clone.users.ProfileService;
 
 @Service
@@ -22,15 +24,15 @@ public class SubmittionService {
         this.profileService = profileService;
     }
 
-    public List<SubmittionListDto> getSubmittionListForProblemSlug(Integer page, Integer size, String problem_slug) {
+    public List<SubmittionListDTO> getSubmittionListForProblemSlug(Integer page, Integer size, String problem_slug) {
         Page<SubmittionEntity> submittions = this.submittionRepository.findAllByProfileAndProblemSlug(
             PageRequest.of(page, size, Sort.by("createdAt").descending()),
             this.profileService.findEntityById(Long.valueOf(1)),
             problem_slug
         );
-        List<SubmittionListDto> submittionDtos = submittions
+        List<SubmittionListDTO> submittionDtos = submittions
             .stream()
-            .map((submittion) -> this.modelMapper.map(submittion, SubmittionListDto.class))
+            .map((submittion) -> this.modelMapper.map(submittion, SubmittionListDTO.class))
             .toList();
         
         return submittionDtos;
@@ -42,9 +44,9 @@ public class SubmittionService {
         });
     }
 
-    public SubmittionDetailDto getSubmittionById(Long id) {
+    public SubmittionDetailDTO getSubmittionById(Long id) {
         var submittion = getSubmittionEntityById(id);
-        return this.modelMapper.map(submittion, SubmittionDetailDto.class);
+        return this.modelMapper.map(submittion, SubmittionDetailDTO.class);
     }
 
     public static class SubmittionNotFoundException extends IllegalArgumentException {
