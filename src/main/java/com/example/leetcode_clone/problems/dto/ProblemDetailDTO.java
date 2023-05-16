@@ -2,6 +2,7 @@ package com.example.leetcode_clone.problems.dto;
 
 import java.util.Date;
 
+import com.example.leetcode_clone.problems.Difficulty;
 import com.example.leetcode_clone.problems.SolutionCheckStrategy;
 import com.example.leetcode_clone.problems.TestStrategy;
 
@@ -15,6 +16,8 @@ public class ProblemDetailDTO {
     private String slug;
     private String title;
     private String description;
+    private Difficulty difficulty;
+    private Double acceptance;
     private TestStrategy testStrategy;
     private SolutionCheckStrategy solutionCheckStrategy;
 

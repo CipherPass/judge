@@ -33,6 +33,13 @@ public class ProblemEntity extends Auditable {
     private String description;
 
     @Enumerated(EnumType.STRING)
+    private Difficulty difficulty;
+
+
+    @Column(precision=1, nullable = true)
+    private Double acceptance;
+
+    @Enumerated(EnumType.STRING)
     private TestStrategy testStrategy;
 
     @Enumerated(EnumType.STRING)
