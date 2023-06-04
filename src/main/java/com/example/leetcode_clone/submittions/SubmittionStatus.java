@@ -1,7 +1,8 @@
 package com.example.leetcode_clone.submittions;
 
 public enum SubmittionStatus {
-    PendingJudgement,
+    Waiting,
+    Queued,
     Judging,
     Accepted,
     Failed,

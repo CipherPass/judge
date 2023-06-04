@@ -1,7 +1,9 @@
 package com.example.leetcode_clone.problems.dto;
 
 import java.util.Date;
+import java.util.List;
 
+import com.example.leetcode_clone.languages.LanguageEntity;
 import com.example.leetcode_clone.problems.Difficulty;
 import com.example.leetcode_clone.problems.SolutionCheckStrategy;
 import com.example.leetcode_clone.problems.TestStrategy;
@@ -21,5 +23,7 @@ public class ProblemDetailDTO {
     private TestStrategy testStrategy;
     private SolutionCheckStrategy solutionCheckStrategy;
 
+    private List<LanguageEntity> languageAvailable;
+    private LanguageEntity defaultLanguage;
     private String resourceURL;
 }

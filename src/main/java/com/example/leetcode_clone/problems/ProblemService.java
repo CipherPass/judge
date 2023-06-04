@@ -2,6 +2,7 @@ package com.example.leetcode_clone.problems;
 
 import java.util.List;
 
+import com.example.leetcode_clone.languages.LanguageService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,10 +18,12 @@ public class ProblemService {
 
     private ModelMapper modelMapper;
     private ProblemRepository problemRepository;
+    private LanguageService languageService;
 
-    ProblemService(ModelMapper modelMapper, ProblemRepository problemRepository){
+    ProblemService(ModelMapper modelMapper, ProblemRepository problemRepository, LanguageService languageService){
         this.modelMapper = modelMapper;
         this.problemRepository = problemRepository;
+        this.languageService = languageService;
     }
 
     public List<ProblemListDTO> getProblemList(Integer page, Integer size) {
@@ -48,12 +51,20 @@ public class ProblemService {
 
     public ProblemDetailDTO getProblem(Long id){
         ProblemEntity problem = getProblemEntityById(id);
+
         ProblemDetailDTO problemDto = this.modelMapper.map(problem, ProblemDetailDTO.class);
+        problemDto.setLanguageAvailable(this.languageService.getAllLangauges());
+        problemDto.setDefaultLanguage(this.languageService.getDefaultLanguage());
+
         return problemDto;
     }
     public ProblemDetailDTO getProblem(String slug){
         ProblemEntity problem = getProblemEntityBySlug(slug);
+
         ProblemDetailDTO problemDto = this.modelMapper.map(problem, ProblemDetailDTO.class);
+        problemDto.setLanguageAvailable(this.languageService.getAllLangauges());
+        problemDto.setDefaultLanguage(this.languageService.getDefaultLanguage());
+
         return problemDto;
     }
 
