@@ -32,7 +32,8 @@ public class SubmittionService {
     @Autowired
     private KafkaTemplate<String, RunSolutionDTO> submittionSubmitQueue;
 
-    SubmittionService(ModelMapper modelMapper, SubmittionRepository submittionRepository, ProfileService profileService, ProblemService problemService){
+    SubmittionService(ModelMapper modelMapper, SubmittionRepository submittionRepository, ProfileService profileService,
+            ProblemService problemService) {
         this.modelMapper = modelMapper;
         this.submittionRepository = submittionRepository;
         this.profileService = profileService;
@@ -41,19 +42,18 @@ public class SubmittionService {
 
     public List<SubmittionListDTO> getSubmittionListForProblemSlug(Integer page, Integer size, String problem_slug) {
         Page<SubmittionEntity> submittions = this.submittionRepository.findAllByProfileAndProblemSlug(
-            PageRequest.of(page, size, Sort.by("createdAt").descending()),
-            this.profileService.findEntityById(Long.valueOf(1)),
-            problem_slug
-        );
+                PageRequest.of(page, size, Sort.by("createdAt").descending()),
+                this.profileService.findEntityById(Long.valueOf(1)),
+                problem_slug);
         List<SubmittionListDTO> submittionDtos = submittions
-            .stream()
-            .map((submittion) -> this.modelMapper.map(submittion, SubmittionListDTO.class))
-            .toList();
-        
+                .stream()
+                .map((submittion) -> this.modelMapper.map(submittion, SubmittionListDTO.class))
+                .toList();
+
         return submittionDtos;
     }
 
-    public SubmittionEntity getSubmittionEntityById(Long id){
+    public SubmittionEntity getSubmittionEntityById(Long id) {
         return this.submittionRepository.findById(id).orElseThrow(() -> {
             throw new SubmittionNotFoundException(id);
         });
@@ -67,6 +67,13 @@ public class SubmittionService {
     public SubmittionResponseDTO submitRunCode(SubmittionRunCreationDTO submittionRunCreationDTO) {
         UUID uuid = UUID.randomUUID();
         RunSolutionDTO runDTO = this.modelMapper.map(submittionRunCreationDTO, RunSolutionDTO.class);
+        runDTO.setProblemId(
+                this.problemService.getProblemEntityBySlug(submittionRunCreationDTO.getProblemSlug()).getId());
+
+        for (int i = 0; i < runDTO.getTestCases().size(); i++) {
+            runDTO.getTestCases().get(i).setId((long) (i + 1));
+        }
+
         runDTO.setCreatedAt(new Date());
         runDTO.setUuid(uuid.toString());
         runCode(runDTO);
@@ -80,16 +87,16 @@ public class SubmittionService {
 
     public static class SubmittionNotFoundException extends IllegalArgumentException {
         public SubmittionNotFoundException(Long id) {
-            super("Submittion with id: "+ id + " not found");
+            super("Submittion with id: " + id + " not found");
         }
     }
 
     protected void submitCode(RunSolutionDTO msg) {
         submittionSubmitQueue.send(KafkaConstant.CODE_RUN_TOPIC_NAME, msg);
     }
-    
+
     protected void runCode(RunSolutionDTO runSolutionDTO) {
-        var future=submittionRunQueue.send(KafkaConstant.CODE_RUN_TOPIC_NAME, runSolutionDTO);
+        var future = submittionRunQueue.send(KafkaConstant.CODE_RUN_TOPIC_NAME, runSolutionDTO);
 
         future.addCallback(new ListenableFutureCallback<>() {
 

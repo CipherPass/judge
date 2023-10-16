@@ -1,5 +1,7 @@
 package com.example.leetcode_clone.submittions.dto;
 
+import java.util.ArrayList;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,4 +12,11 @@ public class SubmittionRunCreationDTO {
     private String code;
     private String problemSlug;
     private Long authUserID;
+    private ArrayList<TestCase> testCases;
+
+    @Getter
+    @Setter
+    public static class TestCase {
+        private String input;
+    }
 }
