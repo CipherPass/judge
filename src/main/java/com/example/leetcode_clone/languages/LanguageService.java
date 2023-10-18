@@ -12,11 +12,11 @@ public class LanguageService {
         this.languageRepository = languageRepository;
     }
 
-    public List<LanguageEntity> getAllLangauges(){
+    public List<LanguageEntity> getAllLangauges() {
         return this.languageRepository.findAll();
     }
 
     public LanguageEntity getDefaultLanguage() {
-        return languageRepository.findById(Long.valueOf(1)).get();
+        return languageRepository.findAll().get(0);
     }
 }
