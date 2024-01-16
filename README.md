@@ -31,18 +31,18 @@ brew services start postgresql@14
 
 ## Run Backend
 ```bash
-cd "$PROJECT_ROOT/backend"
+cd "$PROJECT_ROOT/judge"
 ./gradlew bootrun
 ```
 
 ## Run CodeExecutor
 ```bash
-cd "$PROJECT_ROOT/CodeExecutor"
+cd "$PROJECT_ROOT/code_executor"
 ./gradlew bootrun
 ```
 
 ## Start Frontend
 ```bash
-cd "$PROJECT_ROOT/leetcode_clone_frontend2r"
+cd "$PROJECT_ROOT/webapp"
 npm start
 ```
