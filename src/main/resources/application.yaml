@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:${DATASOURCE_URL:postgresql://localhost:5432/cipher_pass}
-    username: ${DB_USERNAME:cipher_pass_user}
-    password: ${DB_PASSWORD:cipher_pass_password}
+    url: jdbc:${DATASOURCE_URL:postgresql://localhost:5432/optione}
+    username: ${DB_USERNAME:optione_user}
+    password: ${DB_PASSWORD:optione_password}
   jpa:
     hibernate:
       ddl-auto: update
