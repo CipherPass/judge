@@ -16,7 +16,7 @@ trap 'stop_services' SIGTERM
 sleep 3
 
 # Start Kafka Broker
-~/kafka_2.13-3.0.0/bin/kafka-server-start.sh ~/kafka_2.13-3.0.0/config/server.properties &
+# ~/kafka_2.13-3.0.0/bin/kafka-server-start.sh ~/kafka_2.13-3.0.0/config/server.properties &
 
 # Run the Java application
 java -jar app.jar
