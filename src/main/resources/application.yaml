@@ -3,16 +3,12 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/leetcode_clone
-    username: leetcode_clone_user
-    password: leetcode_clone_password
-    # driver-class-name: com.mysql.jdbc.Driver
-    # url: jdbc:mysql://localhost:3306/leetcode_clone
-    # username: leetcode_clone_user
-    # password: leetcode_clone_password
+    url: jdbc:${DATASOURCE_URL:postgresql://localhost:5432/cipher_pass}
+    username: ${DB_USERNAME:cipher_pass_user}
+    password: ${DB_PASSWORD:cipher_pass_password}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
