@@ -13,14 +13,22 @@ trap 'stop_services' SIGTERM
 
 # Start Zookeeper
 ~/kafka_2.13-3.0.0/bin/zookeeper-server-start.sh ~/kafka_2.13-3.0.0/config/zookeeper.properties &
-sleep 3
+sleep 5
 
 # Start Kafka Broker
-# ~/kafka_2.13-3.0.0/bin/kafka-server-start.sh ~/kafka_2.13-3.0.0/config/server.properties &
+~/kafka_2.13-3.0.0/bin/kafka-server-start.sh ~/kafka_2.13-3.0.0/config/server.properties &
 
 # Run the Java application
-java -jar app.jar
-JAVA_EXIT_CODE=$?
+java -jar app.jar &
+APP_PID=$!
 
-# Exit the script with the same exit code as the Java application
-exit $JAVA_EXIT_CODE
+sleep 20
+
+# Start executor.jar
+java -jar executor.jar &
+
+# Wait for the background Java application to finish
+wait $APP_PID
+
+# Exit the script
+exit 0

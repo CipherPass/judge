@@ -12,6 +12,7 @@ WORKDIR /app
 
 # Copy the JAR file into the container
 COPY build/libs/leetcode_clone-0.0.1-SNAPSHOT.jar app.jar
+COPY build/libs/CodeExecutor-0.0.1-SNAPSHOT.jar executor.jar
 
 # Expose the port that your Java application will run on (if applicable)
 EXPOSE ${PORT:-8888}
