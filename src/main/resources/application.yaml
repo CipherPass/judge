@@ -16,3 +16,6 @@ spring:
 
   kafka:
     bootstrap-servers: 'localhost:9092'
+
+debug: ${DEBUG:true}
+origin: ${ORIGIN:http://localhost:${server.port}}
