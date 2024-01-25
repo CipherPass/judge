@@ -3,9 +3,9 @@ FROM openjdk:17-slim
 
 # Install Apache Kafka
 RUN apt-get update && apt-get install -y curl
-RUN curl -O https://archive.apache.org/dist/kafka/3.0.0/kafka_2.13-3.0.0.tgz
-RUN tar xzf kafka_2.13-3.0.0.tgz
-RUN mv kafka_2.13-3.0.0 ~
+RUN curl -O https://archive.apache.org/dist/kafka/3.4.0/kafka_2.13-3.4.0.tgz
+RUN tar xzf kafka_2.13-3.4.0.tgz
+RUN mv kafka_2.13-3.4.0 ~
 
 # Set the working directory
 WORKDIR /app
