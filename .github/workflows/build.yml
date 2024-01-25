@@ -45,6 +45,7 @@ jobs:
 
       - name: Commit and push deploy branch
         run: |
+          cd judge
           git add build/libs/* -f
           git commit -m "Built JARs and created deploy branch"
           git push origin deploy --force
