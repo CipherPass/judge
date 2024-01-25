@@ -1,0 +1,23 @@
+# Use a base image with OpenJRE 11
+FROM openjdk:11-jre-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Install wget
+RUN apt-get update && apt-get install -y wget gnupg
+
+# Download and install Confluent Kafka distribution (you can replace the version with the latest one)
+RUN wget -qO - https://packages.confluent.io/deb/5.5/archive.key | apt-key add - \
+    && echo "deb [arch=amd64] https://packages.confluent.io/deb/5.5 stable main" >> /etc/apt/sources.list \
+    && apt-get update \
+    && apt-get install -y confluent-kafka-2.12
+
+# Expose ZooKeeper and Kafka ports
+EXPOSE 2181 9092
+
+# Start ZooKeeper and Kafka
+# CMD confluent start
+CMD zookeeper-server-start /etc/kafka/zookeeper.properties & kafka-server-start /etc/kafka/server.properties
+
+
