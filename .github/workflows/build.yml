@@ -32,18 +32,22 @@ jobs:
         run: |
           cd code_executor
           ./gradlew bootJar
+          mv ./build/libs/*.jar ../judge/build/libs/
 
       - name: Create deploy branch
         run: |
+          cd judge
+          git branch -D deploy
+          git add ./build/libs/* -f
           git checkout -b deploy
 
       - name: Copy JAR files to deploy branch
         run: |
-          cp judge/build/libs/*.jar deploy/
-          cp code_executor/build/libs/*.jar deploy/
+          cp judge/build/libs/*.jar deploy/build/libs/
+          cp code_executor/build/libs/*.jar deploy/build/libs/
 
       - name: Commit and push deploy branch
         run: |
-          git add .
+          git add build/libs/* -f
           git commit -m "Built JARs and created deploy branch"
           git push origin deploy
