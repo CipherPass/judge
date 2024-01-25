@@ -42,11 +42,10 @@ jobs:
 
       - name: Copy JAR files to deploy branch
         run: |
-          cp judge/build/libs/*.jar deploy/build/libs/
-          cp code_executor/build/libs/*.jar deploy/build/libs/
+          cp code_executor/build/libs/*.jar judge/build/libs/
 
       - name: Commit and push deploy branch
         run: |
           git add build/libs/* -f
           git commit -m "Built JARs and created deploy branch"
-          git push origin deploy
+          git push origin deploy --force
