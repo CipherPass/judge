@@ -32,7 +32,6 @@ jobs:
         run: |
           cd code_executor
           ./gradlew bootJar
-          mv ./build/libs/*.jar ../judge/build/libs/
 
       - name: Create deploy branch
         run: |
