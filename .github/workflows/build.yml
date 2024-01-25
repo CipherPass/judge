@@ -37,8 +37,7 @@ jobs:
       - name: Create deploy branch
         run: |
           cd judge
-          git branch -D deploy
-          git add ./build/libs/* -f
+          git branch -D deploy || true
           git checkout -b deploy
 
       - name: Copy JAR files to deploy branch
