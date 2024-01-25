@@ -3,9 +3,17 @@ name: Build and Deploy JARs
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: write
+  repository-projects: write
+      
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    
+    env:
+      DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
 
     steps:
       - uses: actions/checkout@v3
@@ -33,6 +41,9 @@ jobs:
           cd code_executor
           ./gradlew bootJar
 
+      - name: Set up token
+        run: echo "GITHUB_TOKEN=${{ secrets.DEPLOY_TOKEN }}" >> $GITHUB_ENV
+        
       - name: Create deploy branch
         run: |
           cd judge
